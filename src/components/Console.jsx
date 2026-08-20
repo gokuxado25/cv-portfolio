@@ -38,8 +38,8 @@ export default function Console({ lang }) {
       SKILLS.forEach((s) => out.push({ type: 'out', text: s[lang] + ': ' + s.items.join(', ') }));
     } else if (low === 'cat experience.log') {
       out.push({ type: 'out', text: lang === 'es'
-        ? '2017–2025 · Operaciones 24/7 · 2025– · Soporte IT (Cartronic / Prosegur Activa)'
-        : '2017–2025 · 24/7 operations · 2025– · IT Support (Cartronic / Prosegur Activa)' });
+        ? '2024–2026 · Grado Superior Telecomunicaciones · Prácticas IT & Redes · Voluntario Cruz Roja'
+        : '2024–2026 · Telecom & Networks Degree · IT Internship · Red Cross Volunteer' });
     } else if (low === 'contact') {
       out.push({ type: 'out', text: CONTACT.email + ' · ' + CONTACT.phoneDisplay });
       out.push({ type: 'out', text: CONTACT.github + ' · ' + CONTACT.linkedin });
