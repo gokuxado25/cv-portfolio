@@ -9,8 +9,8 @@ import ActionBar from './components/ActionBar.jsx';
 import Typewriter from './components/Typewriter.jsx';
 
 const PHRASES = {
-  es: ['¿necesitas un sysadmin?', '¿hablamos?', 'disponible · Madrid', 'que las cosas simplemente funcionen', 'uptime: tu tranquilidad'],
-  en: ['need a sysadmin?', 'shall we talk?', 'available · Madrid', 'making things just work', 'uptime: your peace of mind'],
+  es: ['¿necesitas un netadmin?', '¿hablamos?', 'disponible · Madrid', 'que las cosas simplemente funcionen', 'uptime: tu tranquilidad'],
+  en: ['need a netadmin?', 'shall we talk?', 'available · Madrid', 'making things just work', 'uptime: your peace of mind'],
 };
 
 const MONTHS = {
@@ -96,13 +96,13 @@ export default function App() {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="mono text-[12px] text-ink-dim mb-1">
-                  <span className="text-konoha">sysadmin</span><span className="text-ink-mute">@infra:~$ whoami</span>
+                  <span className="text-konoha">netadmin</span><span className="text-ink-mute">@infra:~$ whoami</span>
                 </div>
                 <h1 className="display text-2xl sm:text-3xl font-bold text-ink leading-tight">{CONTACT.name}</h1>
                 <div className="mt-1.5 text-info text-sm sm:text-base font-medium">{tr.role}</div>
                 <div className="mono text-[11px] text-ink-mute mt-1.5">{CONTACT.location}</div>
                 <div className="mono text-[12px] mt-2.5">
-                  <span className="text-konoha">sysadmin</span><span className="text-ink-mute">@infra:~$ </span>
+                  <span className="text-konoha">netadmin</span><span className="text-ink-mute">@infra:~$ </span>
                   <span className="text-ok"><Typewriter phrases={PHRASES[lang]} /></span>
                 </div>
               </div>
