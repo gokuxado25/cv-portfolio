@@ -10,12 +10,11 @@ export const CONTACT = {
   phoneDisplay: '+34 624 472 455 ', 
   location: 'Madrid, España',
   github: 'https://github.com/gokuxado25', 
-  linkedin: 'https://www.linkedin.com/in/PON_AQUI_TU_USUARIO_DE_LINKEDIN', // Pon tu enlace de LinkedIn real
+  linkedin: 'https://www.linkedin.com/in/dihenrry-barbaran-16607139a/, // Pon tu enlace de LinkedIn real
   cal: '',
   web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry',
-
   cvES: '/CV-Dihenrry-ES.pdf',
-  cvEN: '/CV-Dihenrry-EN.pdf',
+  cvEN: '/CV-Dihenrry-ES.pdf', // Si aún no tienes el de inglés, apunta temporalmente al mismo para que no falle
 };
 
 // Panel de estado de sistemas (equivalente al feed de alertas del SOC).
