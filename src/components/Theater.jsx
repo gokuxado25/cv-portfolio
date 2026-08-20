@@ -2,67 +2,67 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 
 // ─────────────────────────────────────────────────────────────
-//  Intro de arranque: los sistemas se ponen ONLINE (estilo NOC).
-//  Sin "ataque" — aquí la narrativa es disponibilidad y uptime.
+//  Intro de arranque: Secuencia de infraestructura real.
+//  Narrativa: Alta disponibilidad, CCNA, Sistemas y Hardware.
 // ─────────────────────────────────────────────────────────────
 
 const SEQ = {
   es: {
-    title: 'INFRA-NODE-01 · arranque de sistemas',
+    title: 'CORE-INFRA-01 · secuencia de inicio',
     boot: [
-      { t: 'INFRA-NODE-01 · secure boot', c: 'dim', d: 240 },
-      { t: '[ OK ] Montando volúmenes y servicios base', c: 'ok', d: 220 },
-      { t: '[ OK ] Active Directory · dominio online', c: 'ok', d: 240 },
-      { t: '[ OK ] Hipervisor · Proxmox / VMware listos', c: 'ok', d: 240 },
-      { t: '[ OK ] Firewall perimetral · reglas aplicadas', c: 'ok', d: 240 },
-      { t: '[ ·· ] Levantando monitorización…', c: 'info', d: 460 },
+      { t: 'CORE-INFRA-01 · cold boot sequence initiated', c: 'dim', d: 240 },
+      { t: '[ OK ] Hardware core · voltajes y micro-componentes verificados', c: 'ok', d: 220 },
+      { t: '[ OK ] Protocolos TCP/IP, VLANs y Routing (Cisco) · ESTABLE', c: 'ok', d: 240 },
+      { t: '[ OK ] Active Directory y Políticas GPO · SINCRONIZADO', c: 'ok', d: 240 },
+      { t: '[ OK ] Firewall perimetral y ACLs de seguridad · APLICADOS', c: 'ok', d: 240 },
+      { t: '[ ·· ] Desplegando red de CCTV y control de accesos…', c: 'info', d: 460 },
     ],
     check: [
-      { t: '[ OK ] Nagios / Zabbix · vigilando', c: 'ok', d: 300 },
-      { t: '[ OK ] Microsoft 365 / Entra ID · sincronizado', c: 'ok', d: 300 },
-      { t: '[ OK ] Backups · al día', c: 'ok', d: 300 },
+      { t: '[ OK ] Telemetría de red y ancho de banda · ÓPTIMO', c: 'ok', d: 300 },
+      { t: '[ OK ] Entornos virtuales y nodos de contingencia · EN LÍNEA', c: 'ok', d: 300 },
+      { t: '[ OK ] Sistemas de backup y redundancia · INTEGRIDAD AL 100%', c: 'ok', d: 300 },
     ],
-    meterLabel: 'DISPONIBILIDAD', okStatus: 'OPERATIVO',
-    finalGlitch: 'LISTO PARA PRODUCCIÓN',
+    meterLabel: 'DISPONIBILIDAD (UPTIME)', okStatus: 'SISTEMA OPERATIVO',
+    finalGlitch: 'INFRAESTRUCTURA ESTABLE',
     reveal: {
-      eyebrow: '// sistema en marcha',
+      eyebrow: '// infraestructura en marcha',
       body: [
-        ['Todo lo que acabas de ver arrancar —dominios, servidores, redes, monitorización— <b>no se mantiene solo</b>.', false],
-        ['Detrás de cada sistema que funciona sin que nadie lo note, hay alguien que lo levanta, lo vigila y lo arregla antes de que falle.', true],
+        ['Todo lo que acabas de ver arrancar —enrutamiento de datos, servidores físicos, firewalls y monitorización— <b>no se gestiona solo</b>.', false],
+        ['Detrás de una red que no cae y una empresa que no se detiene, hay una arquitectura robusta, hardware meticulosamente configurado y un control absoluto del entorno.', true],
       ],
-      tag: 'uptime · el trabajo invisible que sostiene una empresa',
-      closing: 'Si el administrador de sistemas hace bien su trabajo, no parece que esté haciendo nada',
-      sign: '— Pablo Pérez García · Administrador de Sistemas / Soporte IT',
-      cta: 'Ver el sistema ▸',
+      tag: 'disponibilidad 99.9% · el trabajo crítico que sostiene el negocio',
+      closing: 'Si un Administrador de Redes y Sistemas hace su trabajo a la perfección, los demás pensarán que la tecnología funciona por arte de magia.',
+      sign: '— Dihenrry Barbaran Cotrina · Administrador de Redes y Sistemas / Soporte IT',
+      cta: 'Acceder a la infraestructura ▸',
     },
   },
   en: {
-    title: 'INFRA-NODE-01 · systems boot',
+    title: 'CORE-INFRA-01 · boot sequence',
     boot: [
-      { t: 'INFRA-NODE-01 · secure boot', c: 'dim', d: 240 },
-      { t: '[ OK ] Mounting volumes and base services', c: 'ok', d: 220 },
-      { t: '[ OK ] Active Directory · domain online', c: 'ok', d: 240 },
-      { t: '[ OK ] Hypervisor · Proxmox / VMware ready', c: 'ok', d: 240 },
-      { t: '[ OK ] Perimeter firewall · rules applied', c: 'ok', d: 240 },
-      { t: '[ ·· ] Bringing up monitoring…', c: 'info', d: 460 },
+      { t: 'CORE-INFRA-01 · cold boot sequence initiated', c: 'dim', d: 240 },
+      { t: '[ OK ] Core hardware · voltages and micro-components verified', c: 'ok', d: 220 },
+      { t: '[ OK ] TCP/IP, VLANs & Routing protocols (Cisco) · STABLE', c: 'ok', d: 240 },
+      { t: '[ OK ] Active Directory & GPO Policies · SYNCED', c: 'ok', d: 240 },
+      { t: '[ OK ] Perimeter firewall & security ACLs · APPLIED', c: 'ok', d: 240 },
+      { t: '[ ·· ] Deploying CCTV network & access controls…', c: 'info', d: 460 },
     ],
     check: [
-      { t: '[ OK ] Nagios / Zabbix · watching', c: 'ok', d: 300 },
-      { t: '[ OK ] Microsoft 365 / Entra ID · synced', c: 'ok', d: 300 },
-      { t: '[ OK ] Backups · up to date', c: 'ok', d: 300 },
+      { t: '[ OK ] Network telemetry & bandwidth · OPTIMAL', c: 'ok', d: 300 },
+      { t: '[ OK ] Virtual environments & contingency nodes · ONLINE', c: 'ok', d: 300 },
+      { t: '[ OK ] Backup & redundancy systems · 100% INTEGRITY', c: 'ok', d: 300 },
     ],
-    meterLabel: 'AVAILABILITY', okStatus: 'OPERATIONAL',
-    finalGlitch: 'READY FOR PRODUCTION',
+    meterLabel: 'UPTIME AVAILABILITY', okStatus: 'SYSTEM OPERATIONAL',
+    finalGlitch: 'INFRASTRUCTURE STABLE',
     reveal: {
-      eyebrow: '// system up',
+      eyebrow: '// infrastructure online',
       body: [
-        ['Everything you just watched boot up —domains, servers, networks, monitoring— <b>does not run itself</b>.', false],
-        ['Behind every system that works without anyone noticing, there is someone who brings it up, watches it and fixes it before it breaks.', true],
+        ['Everything you just watched boot up —data routing, physical servers, firewalls, and monitoring— <b>does not run itself</b>.', false],
+        ['Behind a network that never goes down and a business that never stops, there is robust architecture, meticulously configured hardware, and absolute control of the environment.', true],
       ],
-      tag: 'uptime · the invisible work that keeps a company running',
-      closing: 'If a sysadmin does their job well, it seems like he is not doing anything at all',
-      sign: '— Pablo Pérez García · Systems Administrator / IT Support',
-      cta: 'Enter the system ▸',
+      tag: '99.9% uptime · the critical work that sustains the business',
+      closing: 'If a Network & Systems Administrator does their job flawlessly, everyone else will think technology works by magic.',
+      sign: '— Dihenrry Barbaran Cotrina · Network & Systems Administrator / IT Support',
+      cta: 'Access infrastructure ▸',
     },
   },
 };
