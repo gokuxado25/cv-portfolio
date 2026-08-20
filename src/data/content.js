@@ -5,15 +5,14 @@
 
 export const CONTACT = {
   name: 'Dihenrry Barbaran Cotrina',
-  email: 'PON_TU_EMAIL@gmail.com',
-  phone: 'PON_TU_TELEFONO',
-  phoneDisplay: 'PON_TU_TELEFONO_CON_ESPACIOS',
+  email: 'dihenrry2004@gmail.com', 
+  phone: '+34 62447244', 
+  phoneDisplay: '+34 600 00 00 00', 
   location: 'Madrid, España',
-  github: 'https://github.com/PON_TU_USUARIO',
-  linkedin: 'https://linkedin.com/in/PON_TU_USUARIO',
+  github: 'https://github.com/gokuxado25', 
+  linkedin: 'https://www.linkedin.com/in/dihenrry-barbaran-16607139a/', 
   cal: '',
-  web: '',
-
+  web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry/inicio', // ¡Tu portafolio antiguo va aquí!
   cvES: '/CV-Dihenrry-ES.pdf',
   cvEN: '/CV-Dihenrry-EN.pdf',
 };
@@ -61,7 +60,7 @@ export const STATUS = [
 export const PROJECTS = [
   {
     repo: 'ZEROFAKE-App',
-    url: '#',
+    url: 'https://sites.google.com/alu.escuni.es/zero-fails/inicio?authuser=0',
     stack: ['Ciberseguridad', 'Diseño Visual', 'Presentaciones'],
     es: {
       tag: 'Ciberseguridad · Concepto',
@@ -69,7 +68,20 @@ export const PROJECTS = [
     },
     en: {
       tag: 'Cybersecurity · Concept',
-      desc: 'Conceptualization and creation of visual materials for the ZEROFAKE cybersecurity application. Design of promotional material and presentations focused on user safety.',
+      desc: 'Conceptualization and creation of materials visual for the ZEROFAKE cybersecurity application. Design of promotional material and presentations focused on user safety.',
+    },
+  },
+  {
+    repo: 'Portafolio-Wix',
+    url: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry/inicio',
+    stack: ['Wix', 'Portafolio', 'Proyectos Previos'],
+    es: {
+      tag: 'Portafolio Web · Antiguo',
+      desc: 'Recopilación de proyectos anteriores, prácticas y trabajos realizados durante mi formación en sistemas y telecomunicaciones.',
+    },
+    en: {
+      tag: 'Web Portfolio · Legacy',
+      desc: 'Collection of previous projects, internships, and work carried out during my training in systems and telecommunications.',
     },
   },
   {
