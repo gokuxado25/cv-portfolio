@@ -11,7 +11,7 @@ export const CONTACT = {
   location: 'Madrid, España',
   github: 'https://github.com/gokuxado25',
   linkedin: 'https://www.linkedin.com/in/dihenrry-barbaran-16607139a/',
-  cal: '',
+  cal: 'https://calendar.app.google/m3bmKbGKDfSJzoDu6',
   web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry',
   cvES: '/CV-Dihenrry-ES.pdf',
   cvEN: '/CV-Dihenrry-ES.pdf',
