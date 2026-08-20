@@ -90,7 +90,7 @@ export default function App() {
             <div className="flex items-start gap-4 mb-5">
               <div className="shrink-0 card flex h-16 w-16 items-center justify-center sm:h-20 sm:w-20">
                 <div className="text-center">
-                  <div className="display text-xl sm:text-2xl font-bold text-ok leading-none">PPG</div>
+                  <div className="display text-xl sm:text-2xl font-bold text-ok leading-none">DBC</div>
                   <div className="mono text-[8px] text-ink-mute mt-1">_infra</div>
                 </div>
               </div>
