@@ -5,14 +5,15 @@
 
 export const CONTACT = {
   name: 'Dihenrry Barbaran Cotrina',
-  email: 'dihenrry2004@gmail.com', 
-  phone: '+34 62447244', 
-  phoneDisplay: '+34 600 00 00 00', 
+  email: 'Dihenrry2004@gmail.com', // Pon aquí tu correo para el botón de contacto
+  phone: '+34 624472455', 
+  phoneDisplay: '+34 624 472 455 ', 
   location: 'Madrid, España',
   github: 'https://github.com/gokuxado25', 
-  linkedin: 'https://www.linkedin.com/in/dihenrry-barbaran-16607139a/', 
+  linkedin: 'https://www.linkedin.com/in/PON_AQUI_TU_USUARIO_DE_LINKEDIN', // Pon tu enlace de LinkedIn real
   cal: '',
-  web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry/inicio', // ¡Tu portafolio antiguo va aquí!
+  web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry',
+
   cvES: '/CV-Dihenrry-ES.pdf',
   cvEN: '/CV-Dihenrry-EN.pdf',
 };
