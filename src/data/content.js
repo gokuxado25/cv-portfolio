@@ -13,8 +13,8 @@ export const CONTACT = {
   linkedin: 'https://www.linkedin.com/in/dihenrry-barbaran-16607139a/, // Pon tu enlace de LinkedIn real
   cal: '',
   web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry',
-  cvES: '/CV-Dihenrry-ES.pdf',
-  cvEN: '/CV-Dihenrry-ES.pdf', // Si aún no tienes el de inglés, apunta temporalmente al mismo para que no falle
+  cvES: '/CV-Dihenrry-ES.pdf', 
+  cvEN: '/CV-Dihenrry-ES.pdf',
 };
 
 // Panel de estado de sistemas (equivalente al feed de alertas del SOC).
