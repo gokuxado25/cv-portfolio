@@ -29,7 +29,7 @@ export default function Console({ lang }) {
     } else if (low === 'whoami') {
       out.push({ type: 'out', text: T[lang].role + ' — ' + CONTACT.location });
     } else if (low === 'uptime') {
-      out.push({ type: 'ok', text: lang === 'es' ? ' 8 años en operaciones técnicas · carga: estable · caídas: las mínimas' : ' 8 years in technical operations · load: stable · outages: minimal' });
+      out.push({ type: 'ok', text: lang === 'es' ? ' Proyectos y despliegues en activo · carga: estable · uptime: 99.9%' : ' Active projects and deployments · load: stable · uptime: 99.9%' });
     } else if (low === 'systemctl status' || low === 'systemctl') {
       STATUS.forEach((s) => out.push({ type: 'ok', text: '● ' + s[lang].title + '  —  ' + s[lang].state }));
     } else if (low === 'ls' || low === 'ls projects/' || low === 'ls projects') {
@@ -38,8 +38,8 @@ export default function Console({ lang }) {
       SKILLS.forEach((s) => out.push({ type: 'out', text: s[lang] + ': ' + s.items.join(', ') }));
     } else if (low === 'cat experience.log') {
       out.push({ type: 'out', text: lang === 'es'
-        ? '2024–2026 · Grado Superior Telecomunicaciones · Prácticas IT & Redes · Voluntario Cruz Roja'
-        : '2024–2026 · Telecom & Networks Degree · IT Internship · Red Cross Volunteer' });
+        ? '2024–2026 · Grado Superior (STI) · Prácticas SysAdmin/Redes · Voluntariado Cruz Roja'
+        : '2024–2026 · Higher Degree (STI) · SysAdmin/Network Internship · Red Cross Volunteer' });
     } else if (low === 'contact') {
       out.push({ type: 'out', text: CONTACT.email + ' · ' + CONTACT.phoneDisplay });
       out.push({ type: 'out', text: CONTACT.github + ' · ' + CONTACT.linkedin });
