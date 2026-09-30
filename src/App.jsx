@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { CONTACT, SKILLS, CERTS, T } from './data/content.js';
-import Theater from './components/Theater.jsx';
+import BootRouter from './components/BootRouter.jsx';
 import StatusPanel from './components/StatusPanel.jsx';
 import Projects from './components/Projects.jsx';
 import Console from './components/Console.jsx';
@@ -61,7 +61,7 @@ export default function App() {
       <div className="bg-glow" style={{ top: '20%', right: '-100px', width: 320, height: 320, background: 'var(--glow-2)' }} />
 
       <AnimatePresence>
-        {booting && <Theater lang={lang} setLang={setLang} onDone={finishIntro} />}
+        {booting && <BootRouter onComplete={finishIntro} />}
       </AnimatePresence>
 
       {!booting && (
