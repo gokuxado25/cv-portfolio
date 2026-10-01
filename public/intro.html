@@ -30,11 +30,11 @@ button:hover {transform: translateY(-2px); box-shadow: 0 4px 20px rgba(34, 197, 
 #term i{width:10px;height:10px;border-radius:50%}
 #term span{color:#8b99a6;font-size:11px;margin-left:6px; letter-spacing: 1px;}
 #log{height:9em;overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end; text-shadow: 0 0 5px rgba(34,197,94,0.5);}
-#final{position:fixed;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:24px;text-align:center;background:rgba(2,4,8,.92);opacity:0;pointer-events:none;transition:opacity 1.5s ease-in-out; backdrop-filter: blur(8px);}
+#final{position:fixed;inset:0;z-index:6;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:30px;padding:24px;text-align:center;background:rgba(2,4,8,.94);opacity:0;pointer-events:none;transition:opacity 1.5s ease-in-out; backdrop-filter: blur(10px);}
 #final.on{opacity:1;pointer-events:auto}
-#final h1{font:300 clamp(24px,4.5vw,48px)/1.3 var(--ui);max-width:26ch;margin:0; color: #fff;}
-#final h1 strong {color: #22c55e; font-weight: 600; text-shadow: 0 0 20px rgba(34, 197, 94, 0.3);}
-#final p{color:#a3b8cc;max-width:50ch;margin:0;font-size:19px; line-height: 1.6;}
+#final h1{font:300 clamp(22px,4vw,42px)/1.4 var(--ui);max-width:32ch;margin:0; color: #fff;}
+#final h1 strong {color: #22c55e; font-weight: 600; text-shadow: 0 0 25px rgba(34, 197, 94, 0.4);}
+#final p{color:#a3b8cc;max-width:55ch;margin:0;font-size:19px; line-height: 1.6;}
 </style>
 </head>
 <body>
@@ -45,15 +45,16 @@ button:hover {transform: translateY(-2px); box-shadow: 0 4px 20px rgba(34, 197, 
 <button id="skip" class="btn ghost" type="button">Omitir intro</button>
 <div id="cap" aria-live="polite"></div>
 <section id="final">
-  <h1>Todo lo que acabas de ver arrancar <br><strong>—enrutamiento de datos, servidores, firewalls y monitorización—</strong><br> no se gestiona solo.</h1>
-  <p>Soy Dihenrry Barbaran Cotrina, técnico superior en sistemas de telecomunicaciones e informáticos, y ahí es donde entro yo.</p>
+  <h1>Detrás de cada clic hay un ecosistema de redes, servidores y seguridad trabajando al milisegundo.<br><strong>Mi trabajo es que tú nunca lo notes.</strong></h1>
+  <p>Soy Dihenrry Barbaran Cotrina, administrador de redes e infraestructura IT.</p>
   <button class="btn" id="enterApp" type="button">[ ENTRAR AL PORTAFOLIO ]</button>
 </section>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <script>
 const $=s=>document.querySelector(s), V=(x,y,z)=>new THREE.Vector3(x,y,z);
-const Y0=-30, YN=-60, END=41;
+// AJUSTE DE TIEMPO: El final se adelanta a los 35s (antes 41s) para que la red sea más rápida
+const Y0=-30, YN=-60, END=35;
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 let renderer;
 try{renderer=new THREE.WebGLRenderer({canvas:$('#c'),antialias:true, alpha:false})}catch(e){$('#start').style.display='none';$('#hint').style.display='none';$('#final').classList.add('on')}
@@ -70,17 +71,32 @@ const cam=new THREE.PerspectiveCamera(45,1,.05,400);
 function resize(){renderer.setSize(innerWidth,innerHeight,false);cam.aspect=innerWidth/innerHeight;cam.updateProjectionMatrix()}
 addEventListener('resize',resize);resize();
 
-scene.add(new THREE.AmbientLight(0x1a2b3c,.7));
-const key=new THREE.SpotLight(0xcceeff, 1.8, 60, 0.5, 0.5, 1);
+scene.add(new THREE.AmbientLight(0x1a2b3c,.8));
+const key=new THREE.SpotLight(0xcceeff, 2.2, 60, 0.5, 0.5, 1);
 key.position.set(8, 15, 15);
 key.castShadow = true;
 scene.add(key);
+
+// === TEXTURA GENERATIVA PARA REALISMO (MICRORRUGOSIDAD) ===
+const nz = document.createElement('canvas'); nz.width = 256; nz.height = 256;
+const ctx = nz.getContext('2d');
+const imgData = ctx.createImageData(256, 256);
+for (let i = 0; i < imgData.data.length; i += 4) {
+  const v = Math.random() * 255;
+  imgData.data[i] = v; imgData.data[i+1] = v; imgData.data[i+2] = v; imgData.data[i+3] = 255;
+}
+ctx.putImageData(imgData, 0, 0);
+const noiseTex = new THREE.CanvasTexture(nz);
+noiseTex.wrapS = noiseTex.wrapT = THREE.RepeatWrapping;
+noiseTex.repeat.set(4, 4);
+// ==========================================================
 
 const gc=document.createElement('canvas');gc.width=gc.height=128;{const g=gc.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'#fff');r.addColorStop(.2,'rgba(255,255,255,.6)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128)}
 const glowTex=new THREE.CanvasTexture(gc);
 function glow(color,size,op=1){const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex,color,blending:THREE.AdditiveBlending,depthWrite:false,transparent:true,opacity:op}));s.scale.set(size,size,1);return s}
 
-const std=(c,r=.3,m=.8)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m});
+// Aplicamos el BumpMap (Relieve) a todos los materiales estándar
+const std=(c,r=.4,m=.7)=>new THREE.MeshStandardMaterial({color:c,roughness:r,metalness:m, bumpMap: noiseTex, bumpScale: 0.015});
 function box(w,h,d,mat,x=0,y=0,z=0,parent=scene){const m=new THREE.Mesh(new THREE.BoxGeometry(w,h,d),mat);m.position.set(x,y,z);m.castShadow=true;m.receiveShadow=true;parent.add(m);return m}
 function label(txt,x,y,z){const c=document.createElement('canvas');c.width=256;c.height=64;const g=c.getContext('2d');g.font='600 30px sans-serif';g.fillStyle='#a3b8cc';g.textAlign='center';g.fillText(txt,128,42);const s=new THREE.Sprite(new THREE.SpriteMaterial({map:new THREE.CanvasTexture(c),transparent:true,depthWrite:false}));s.scale.set(7,1.75,1);s.position.set(x,y,z);scene.add(s)}
 
@@ -88,8 +104,8 @@ const dark=std(0x0a0c10,.4,.9);
 const fc=document.createElement('canvas');fc.width=2400;fc.height=300;
 {const g=fc.getContext('2d'),X=u=>(u+4)*300,Y=v=>(.5-v)*300;
  const gr=g.createLinearGradient(0,0,0,300);gr.addColorStop(0,'#2a2f35');gr.addColorStop(.45,'#1a1d21');gr.addColorStop(1,'#0f1115');g.fillStyle=gr;g.fillRect(0,0,2400,300);
- for(let i=0;i<3000;i++){g.fillStyle='rgba(255,255,255,'+Math.random()*.02+')';g.fillRect(Math.random()*2400,Math.random()*300,5+Math.random()*50,1)}
- g.fillStyle='rgba(0,0,0,.8)';g.fillRect(0,295,2400,5);
+ for(let i=0;i<4000;i++){g.fillStyle='rgba(255,255,255,'+Math.random()*.03+')';g.fillRect(Math.random()*2400,Math.random()*300,8+Math.random()*60,1)}
+ g.fillStyle='rgba(0,0,0,.9)';g.fillRect(0,294,2400,6);
  for(const q of[-1,1]){g.fillStyle='#1c1f24';g.fillRect(q<0?0:X(3.6),0,120,300);for(const y of[-.28,.28]){g.fillStyle='#020202';g.fillRect(X(q*3.8)-14,Y(y)-30,28,60)}}
  g.textAlign='left';g.fillStyle='#e6edf3';g.font='bold 32px sans-serif';g.fillText('DIHENRRY_INFRA',X(-3.5),Y(.3));
  g.fillStyle='#22c55e';g.font='22px sans-serif';g.fillText('CATALYST CORE',X(-3.5),Y(.15));
@@ -105,7 +121,8 @@ const fc=document.createElement('canvas');fc.width=2400;fc.height=300;
  for(let i=0;i<12;i++){const cx=X(-1.35+i*.32);port(cx,Y(.13),78);port(cx,Y(-.13),78);g.fillStyle='#4b5563';g.font='16px sans-serif';g.fillText(i+1,cx,Y(.39));g.fillText(i+13,cx,Y(-.43)+10)}
 }
 const faceTex=new THREE.CanvasTexture(fc);faceTex.anisotropy=16;
-scene.add(new THREE.Mesh(new THREE.BoxGeometry(8,1,3),[dark,dark,std(0x1a1d21,.4,.7),dark,new THREE.MeshStandardMaterial({map:faceTex,roughness:.3,metalness:.6}),dark]));
+// Textura realista para el switch
+scene.add(new THREE.Mesh(new THREE.BoxGeometry(8,1,3),[dark,dark,std(0x1a1d21,.4,.7),dark,new THREE.MeshStandardMaterial({map:faceTex,roughness:.3,metalness:.6, bumpMap:faceTex, bumpScale:0.02}),dark]));
 const postMat=std(0x11151a, .5, .8);
 for(const q of[-1,1])box(.4,12,3.4,postMat,q*4.4,0,0);
 [1.15,2.3,-1.15,-2.3].forEach(y=>{box(8,.95,3,dark,0,y,0);for(let k=0;k<3;k++)box(.05,.05,.02,new THREE.MeshBasicMaterial({color:k?0x2fe39c:0x2a3540}),-3.5+k*.2,y,1.52)});
@@ -120,8 +137,8 @@ const term=$('#term'),logEl=$('#log');let tcount=-1;
 const tcues=[[.9,'[ BIOS ] Iniciando secuencia POST... OK'],[1.8,'[ BIOS ] Verificando interfaces físicas...'],[3.5,'Cisco IOS Software, C2960X Software'],[4.1,'Cargando memoria flash... OK'],[4.6,'Inicializando VLANs y STP... OK'],[5.0,'Levantando interfaces GigabitEthernet... DONE'],[5.6,'[ RED ] Enrutando paquete: PC → Switch → Firewall → Servidor'],[7.6,'[ OK ] Conexión de red segura establecida.']];
 
 const pcb=new THREE.Group();pcb.position.y=Y0;scene.add(pcb);
-box(32,.4,21,std(0x062b1d,.5,.3),0,-.2,0,pcb);
-const pl=new THREE.PointLight(0x88ccff, 2, 40);pl.position.set(0,6,2);pcb.add(pl);
+box(32,.4,21,std(0x042416,.6,.4),0,-.2,0,pcb); // PCB rugoso
+const pl=new THREE.PointLight(0x88ccff, 2.5, 40);pl.position.set(0,6,2);pcb.add(pl);
 box(5,.7,5,std(0x1a1d21,.4,.8),0,.35,0,pcb); 
 for(let i=0;i<13;i++)box(4.6,1.1,.2,std(0x4a5568,.3,.9),0,1.2,-2.2+i*.37,pcb); 
 let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;
@@ -137,9 +154,9 @@ function pAt(p,s){const d=s*p.len;let i=1;while(i<p.L.length-1&&p.L[i]<d)i++;ret
 
 const net=new THREE.Group();net.position.y=YN;scene.add(net);
 const grid=new THREE.GridHelper(120,60,0x0f172a,0x020617);net.add(grid);
-const nl=new THREE.PointLight(0xaaddff,2.5,60);nl.position.set(0,15,5);net.add(nl);
+const nl=new THREE.PointLight(0xaaddff,3,60);nl.position.set(0,15,5);net.add(nl);
 const NX=[-24,-12,0,12,24],names=['PC Cliente','Switch Core','Router BGP','Firewall ASA','Servidor Web'];
-const specs=[[3,5,4,0x1e293b,0x22c55e],[5,1.2,3,0x334155,0x22c55e],[4,.9,3,0x334155,0x0ea5e9],[4,1.8,3,0x1e293b,0xf97316],[3.5,8,4,0x0f172a,0x22c55e]]; 
+const specs=[[3,5,4,0x1e293b,0x22c55e],[5,1.2,3,0x242e3d,0x22c55e],[4,.9,3,0x242e3d,0x0ea5e9],[4,1.8,3,0x1e293b,0xf97316],[3.5,8,4,0x0f172a,0x22c55e]]; 
 specs.forEach(([w,h,d,c,led],i)=>{const g=new THREE.Group();g.position.set(NX[i],h/2,0);net.add(g);
  box(w,h,d,std(c,.4,.8),0,0,0,g); 
  const n=i===4?6:i===0?1:5;
@@ -148,13 +165,13 @@ specs.forEach(([w,h,d,c,led],i)=>{const g=new THREE.Group();g.position.set(NX[i]
    const m=new THREE.Mesh(new THREE.BoxGeometry(i===4?2.4:.16,.12,.02),new THREE.MeshBasicMaterial({color:led}));
    m.position.set(i===0?0:x,i===0?1.5:y,d/2+.01);g.add(m);
    if(i===4 || i===3){ 
-      const gl = glow(led, 0.8); gl.position.set(0, y, d/2+0.1); g.add(gl);
+      const gl = glow(led, 0.9); gl.position.set(0, y, d/2+0.15); g.add(gl);
    }
  }
  label(names[i],NX[i],h+2.2,0);
 });
 for(let i=0;i<4;i++){const c=new THREE.Mesh(new THREE.CylinderGeometry(.08,.08,12,8),std(0x0ea5e9,.3,.6));c.rotation.z=Math.PI/2;c.position.set((NX[i]+NX[i+1])/2,.35,1.6);net.add(c)}
-const pkt=glow(0xf97316, 3.5);const pktCore=new THREE.Mesh(new THREE.SphereGeometry(.25,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));
+const pkt=glow(0xf97316, 4);const pktCore=new THREE.Mesh(new THREE.SphereGeometry(.28,16,16),new THREE.MeshBasicMaterial({color:0xffffff}));
 const pk=new THREE.Group();pk.add(pkt,pktCore);pk.position.set(-24,.4,1.6);net.add(pk);
 
 const es=u=>u*u*(3-2*u), curve=a=>new THREE.CatmullRomCurve3(a.map(p=>V(...p)));
@@ -167,21 +184,21 @@ function build(){
   ];
 }
 const caps=[
-  [.3,'Energizando equipo de red. Verificando voltajes básicos.'],
-  [3.4,'Cargando firmware y archivos de configuración Cisco IOS.'],
+  [.3,'Energizando equipo de red. Verificando voltajes.'],
+  [3.4,'Cargando firmware y archivos de configuración.'],
   [5.2,'Configurando VLANs y definiendo el árbol STP.'],
   [7.2,'Acceso concedido. Entrando a la estructura interna.'],
   [10.6,'Los pulsos eléctricos viajan por las pistas de cobre.'],
-  [14.5,'El procesador ASIC conmuta los paquetes a velocidad luz.'],
-  [18.5,'Saliendo de la placa hacia la red distribuida externa.'],
-  [22.4,'Petición HTTP iniciada por el PC Cliente.'],
-  [31.5,'El Servidor procesa la respuesta y la envía de vuelta.']
+  [14.5,'El procesador ASIC conmuta a velocidad luz.'],
+  [18.5,'Saliendo de la placa hacia la red distribuida.'],
+  [22.1,'Petición HTTP iniciada por el PC Cliente.'],
+  [27.5,'El Servidor procesa y envía la respuesta.']
 ];
 const hopsOut=[
-  [0,'El paquete TCP/IP inicia en el PC del usuario.'],
-  [1,'El Switch Core aísla y etiqueta la VLAN correcta.'],
-  [2,'El Router BGP define la ruta más rápida hacia el destino.'],
-  [3,'El Firewall Perimetral inspecciona y autoriza la conexión.'],
+  [0,'El paquete inicia en el PC del usuario.'],
+  [1,'El Switch Core aísla la VLAN correcta.'],
+  [2,'El Router BGP define la ruta más rápida.'],
+  [3,'El Firewall Perimetral autoriza la conexión.'],
   [4,'El Servidor Físico recibe la solicitud web.']
 ];
 
@@ -211,26 +228,31 @@ function frame(now){
   const ph=phases.find(p=>t>=p.a&&t<p.b);
   if(ph){const u=es((t-ph.a)/(ph.b-ph.a));pos=ph.p.getPoint(u);look=ph.l.getPoint(u);cp.copy(pos);cl.copy(look)}
   else if(t>=22&&t<END){
-    const out=Math.min(Math.max((t-22)/9.5,0),1);
-    const back=Math.min(Math.max((t-31.5)/9.5,0),1);
-    const x=t<31.5?-24+48*es(out):24-48*es(back);
+    // AJUSTE DE VELOCIDAD: Se reduce a 5.5s la ida y 5.5s la vuelta (1.75x más rápido)
+    const out=Math.min(Math.max((t-22)/5.5,0),1);
+    const back=Math.min(Math.max((t-27.5)/5.5,0),1);
+    const x=t<27.5?-24+48*es(out):24-48*es(back);
+    
     pk.position.x=x;
-    pkt.material.color.set(t<31.5?0xf97316:0x22c55e);
-    const dir=t<31.5?1:-1;
+    pkt.material.color.set(t<27.5?0xf97316:0x22c55e);
+    const dir=t<27.5?1:-1;
     const tp=V(x-dir*10,YN+5,13), tl=V(x+dir*6,YN+.6,0);
+    
     if(t<22.2){cp.copy(tp);cl.copy(tl)}
-    const k=1-Math.exp(-dt*3);cp.lerp(tp,k);cl.lerp(tl,k);pos=cp;look=cl;
-    if(t<31.5){
+    const k=1-Math.exp(-dt*3.5);cp.lerp(tp,k);cl.lerp(tl,k);pos=cp;look=cl;
+    
+    if(t<27.5){
         const h=hopsOut.find(h=>Math.abs(x-NX[h[0]])<3.5);
         if(h) setCap(h[1]);
-    } else if (t >= 31.5 && t < END - 1) {
+    } else if (t >= 27.5 && t < END - 1) {
         setCap('La respuesta de los paquetes vuelve por el mismo camino.');
     }
   }else{pos=V(Math.sin(time*.12)*12,YN+6,16);look=V(0,YN+2,0);cp.copy(pos)}
   
   const sh=reduce?0:.018;
   cam.position.set(pos.x+Math.sin(time*1.2)*sh*8,pos.y+Math.sin(time*1.9)*sh*6,pos.z+Math.cos(time*1.5)*sh*6);cam.lookAt(look);
-  if(t<22||t>=40){let c='';for(const x of caps)if(t>=x[0])c=x[1];if(t>=40||t<22)setCap(c)}
+  
+  if(t<22||t>=END){let c='';for(const x of caps)if(t>=x[0])c=x[1];if(t>=END||t<22)setCap(c)}
   pulses.forEach(q=>{let s=(time*q.v+q.o)%1;if(q.rev)s=1-s;q.s.position.copy(pAt(q.p,s))});
   renderer.render(scene,cam);
 }
@@ -239,7 +261,6 @@ function begin(){build();started=true;t0=performance.now();skipT=0;ended=false;$
 $('#start').onclick=begin;
 $('#skip').onclick=()=>{skipT=END-(performance.now()-t0)/1000+.01};
 
-// ESTE ES EL CÓDIGO QUE CONECTA EL 3D CON REACT
 $('#enterApp').onclick=()=>{
   window.parent.postMessage('intro_done', '*');
 };
