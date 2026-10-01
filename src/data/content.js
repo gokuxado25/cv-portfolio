@@ -1,128 +1,197 @@
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { PROJECTS } from '../data/content.js';
-
-// Fórmulas para calcular la fuerza del deslizamiento (swipe)
-const swipeConfidenceThreshold = 10000;
-const swipePower = (offset, velocity) => {
-  return Math.abs(offset) * velocity;
+export const CONTACT = {
+  name: 'Dihenrry Barbaran Cotrina',
+  email: 'Dihenrry2004@gmail.com',
+  phone: '+34 624472455',
+  phoneDisplay: '+34 624 472 455',
+  location: 'Madrid, España',
+  github: 'https://github.com/gokuxado25',
+  linkedin: 'https://www.linkedin.com/in/dihenrry-barbaran-16607139a/',
+  cal: 'https://calendar.app.google/m3bmKbGKDfSJzoDu6',
+  web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry',
+  // Cambiamos el nombre del archivo para que obligue al navegador a descargar el nuevo
+  cvES: '/CV-Dihenrry-ES-Nuevo.pdf', 
+  cvEN: '/CV-Dihenrry-ES-Nuevo.pdf', 
 };
 
-export default function Projects({ lang }) {
-  const [current, setCurrent] = useState(0);
-  const p = PROJECTS[current];
+export const STATUS = [
+  {
+    id: 'SYS-NET', sev: 'up',
+    es: { title: 'Redes y Routing · Cisco CCNA', src: 'Cisco, Planet, Sagemcom', state: 'OPERATIVO',
+          detail: 'Configuración de equipos de red, switching y routing. Diseño de infraestructura y conectividad.' },
+    en: { title: 'Networking & Routing · Cisco CCNA', src: 'Cisco, Planet, Sagemcom', state: 'OPERATIONAL',
+          detail: 'Network equipment configuration, switching and routing. Infrastructure and connectivity design.' },
+  },
+  {
+    id: 'SYS-HW', sev: 'up',
+    es: { title: 'Hardware & Soporte Físico', src: 'Ensamblaje, reparación, microsoldadura', state: 'OPERATIVO',
+          detail: 'Montaje de equipos, reparación a nivel componente, micro-soldadura y configuración avanzada (BIOS, Wake-on-LAN).' },
+    en: { title: 'Hardware & Physical Support', src: 'Assembly, repair, micro-soldering', state: 'OPERATIONAL',
+          detail: 'Custom PC building, component-level repair, micro-soldering and advanced configuration (BIOS, Wake-on-LAN).' },
+  },
+  {
+    id: 'SYS-CCTV', sev: 'watch',
+    es: { title: 'Sistemas CCTV y AV', src: 'Arecont Vision, instalaciones', state: 'MONITORIZANDO',
+          detail: 'Diseño y configuración de circuitos cerrados de televisión, distribución de sonido y seguridad física.' },
+    en: { title: 'CCTV & AV Systems', src: 'Arecont Vision, installations', state: 'WATCHING',
+          detail: 'Design and configuration of closed-circuit television, sound distribution and physical security.' },
+  },
+  {
+    id: 'SYS-AD', sev: 'up',
+    es: { title: 'Sistemas · Active Directory', src: 'Usuarios, GPOs, Soporte', state: 'OPERATIVO',
+          detail: 'Administración de dominio: usuarios, grupos y políticas. Soporte técnico directo al usuario final.' },
+    en: { title: 'Systems · Active Directory', src: 'Users, GPOs, Support', state: 'OPERATIONAL',
+          detail: 'Domain administration: users, groups and policies. Direct technical support to end-users.' },
+  },
+  {
+    id: 'SYS-EDU', sev: 'guard',
+    es: { title: 'Concienciación y Ciberseguridad', src: 'Cruz Roja · Voluntariado', state: 'PROTEGIENDO',
+          detail: 'Diseño de talleres, gamificación y dinámicas sobre ciberseguridad, prevención y seguridad.' },
+    en: { title: 'Awareness & Cybersecurity', src: 'Red Cross · Volunteering', state: 'GUARDING',
+          detail: 'Design of workshops, gamification and dynamics on cybersecurity, prevention and safety.' },
+  },
+];
 
-  // Función para pasar de página cíclicamente al arrastrar
-  const paginate = (direction) => {
-    let nextIndex = current + direction;
-    if (nextIndex < 0) nextIndex = PROJECTS.length - 1;
-    if (nextIndex >= PROJECTS.length) nextIndex = 0;
-    setCurrent(nextIndex);
-  };
+export const PROJECTS = [
+  {
+    repo: 'ZEROFAKE-App',
+    url: 'https://sites.google.com/alu.escuni.es/zero-fails/inicio?authuser=0',
+    stack: ['Ciberseguridad', 'Diseño Visual', 'Presentaciones'],
+    es: {
+      tag: 'Ciberseguridad · Concepto',
+      desc: 'Conceptualización y creación de materiales visuales para la aplicación de ciberseguridad ZEROFAKE. Diseño de material promocional y presentaciones enfocadas en la seguridad del usuario.',
+    },
+    en: {
+      tag: 'Cybersecurity · Concept',
+      desc: 'Conceptualization and creation of materials visual for the ZEROFAKE cybersecurity application. Design of promotional material and presentations focused on user safety.',
+    },
+  },
+  {
+    repo: 'Portafolio-Wix',
+    url: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry/inicio',
+    stack: ['Wix', 'Portafolio', 'Proyectos Previos'],
+    es: {
+      tag: 'Portafolio Web · Antiguo',
+      desc: 'Recopilación de proyectos anteriores, prácticas y trabajos realizados durante mi formación en sistemas y telecomunicaciones.',
+    },
+    en: {
+      tag: 'Web Portfolio · Legacy',
+      desc: 'Collection of previous projects, internships, and work carried out during my training in systems and telecommunications.',
+    },
+  },
+  {
+    repo: 'Rosenholm-Castle-Infra',
+    url: '#',
+    stack: ['CCTV', 'Diseño 3D', 'Infraestructura', 'Audio'],
+    es: {
+      tag: 'Diseño de Infraestructura',
+      desc: 'Diseño de instalaciones técnicas para la adaptación del Castillo de Rosenholm como espacio de eventos. Planificación de ubicación de cámaras CCTV, distribución de sonido e infraestructura de aparcamiento mediante modelado 3D.',
+    },
+    en: {
+      tag: 'Infrastructure Design',
+      desc: 'Design of technical installations for the adaptation of Rosenholm Castle as an event space. Planning of CCTV camera placement, sound distribution and parking infrastructure using 3D modeling.',
+    },
+  },
+  {
+    repo: 'CruzRoja-EduTech',
+    url: '#',
+    stack: ['Educación', 'Gamificación', 'Genially', 'Ciberseguridad'],
+    es: {
+      tag: 'Educación · Voluntariado',
+      desc: 'Creación de juegos interactivos, quizzes y talleres prácticos para enseñar ciberseguridad, uso seguro de redes y primeros auxilios a jóvenes dentro del programa de Cruz Roja.',
+    },
+    en: {
+      tag: 'Education · Volunteering',
+      desc: 'Creation of interactive games, quizzes and practical workshops to teach cybersecurity, safe network usage and first aid to young people within the Red Cross program.',
+    },
+  },
+];
 
-  const formatUrlForDisplay = (url) => {
-    if (url === '#') return 'Proyecto local / offline';
-    try {
-      const u = new URL(url);
-      return u.hostname.replace('www.', '') + u.pathname;
-    } catch {
-      return url;
-    }
-  };
+export const SKILLS = [
+  { es: 'Redes y Comunicaciones', en: 'Networking & Comms', items: ['Cisco', 'Routing', 'Switching', 'LAN/WAN', 'Configuración de Switches'] },
+  { es: 'Sistemas', en: 'Systems', items: ['Active Directory', 'Windows', 'macOS', 'Soporte Técnico'] },
+  { es: 'Hardware', en: 'Hardware', items: ['Ensamblaje PC', 'Reparación', 'Micro-soldadura', 'Mantenimiento'] },
+  { es: 'Seguridad Física', en: 'Physical Security', items: ['CCTV', 'Arecont Vision', 'Instalaciones Técnicas'] },
+  { es: 'Herramientas Digitales', en: 'Digital Tools', items: ['Genially', 'Modelado 3D (Básico)', 'Edición de vídeo'] },
+];
 
-  return (
-    <div className="card overflow-hidden select-none">
-      {/* Cabecera tipo Terminal */}
-      <div className="flex items-center justify-between border-b border-line px-4 py-3 bg-ink/5">
-        <div className="flex gap-1.5">
-          <div className="h-2.5 w-2.5 rounded-full bg-[#ff5f56]" />
-          <div className="h-2.5 w-2.5 rounded-full bg-[#ffbd2e]" />
-          <div className="h-2.5 w-2.5 rounded-full bg-[#27c93f]" />
-        </div>
-        
-        {p.url && p.url !== '#' && (
-          <div className="mono text-[11px] text-ink-mute flex items-center gap-1.5 truncate max-w-[150px] sm:max-w-none">
-            {formatUrlForDisplay(p.url)}
-          </div>
-        )}
-      </div>
+export const CERTS = [
+  { name: 'Cisco CCNA', state: 'done' },
+  { name: 'FP Superior (STI) · Telecomunicaciones e Informática', state: 'done' },
+];
 
-      {/* Área interactiva de Arrastre (Swipe / Drag) */}
-      <div className="relative overflow-hidden cursor-grab active:cursor-grabbing">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.2 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={1}
-            onDragEnd={(e, { offset, velocity }) => {
-              const swipe = swipePower(offset.x, velocity.x);
-              // Detecta si deslizas a la izquierda o derecha
-              if (swipe < -swipeConfidenceThreshold) {
-                paginate(1); // Siguiente
-              } else if (swipe > swipeConfidenceThreshold) {
-                paginate(-1); // Anterior
-              }
-            }}
-            className="p-5 sm:p-6 min-h-[180px] flex flex-col"
-          >
-            <div className="flex justify-between items-start mb-3 gap-2">
-              <div className="mono text-[11px] uppercase tracking-wider text-amber mt-1">
-                {p[lang].tag}
-              </div>
-              
-              {/* BOTÓN GIGANTE DE ENLACE */}
-              {p.url && p.url !== '#' && (
-                <a 
-                  href={p.url} 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-1 text-[10px] font-bold uppercase tracking-widest bg-info/20 text-info border border-info/50 px-3 py-1.5 rounded-full hover:bg-info hover:text-bg hover:scale-105 transition-all shadow-[0_0_10px_rgba(52,211,153,0.1)] hover:shadow-[0_0_15px_rgba(52,211,153,0.4)] z-10 cursor-pointer shrink-0"
-                >
-                  Ver Proyecto
-                  <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                  </svg>
-                </a>
-              )}
-            </div>
+export const T = {
+  es: {
+    role: 'Técnico de Telecomunicaciones e Informática',
+    feedTitle: 'Estado de sistemas',
+    feedSub: 'Monitorización en vivo',
+    hookLabel: '// el perfil',
+    hook:
+      'Técnico superior en Sistemas de Telecomunicación e Informáticos con certificación Cisco CCNA. Combino la pasión por el hardware —desde el ensamblaje hasta la micro-soldadura— con la configuración de redes y sistemas. Me encanta entender cómo funcionan las cosas por dentro y compartir ese conocimiento.',
+    sectionProjects: 'Proyectos y Trabajos',
+    sectionProjectsSub: 'Teoría aplicada a la práctica',
+    sectionExp: 'Trayectoria',
+    sectionGoal: 'Hacia dónde voy',
+    goalText:
+      'Mi objetivo es seguir creciendo en el área de infraestructura de redes y ciberseguridad. Busco aplicar mis conocimientos de Cisco y sistemas en entornos empresariales, combinando mi perfil técnico con mis habilidades de comunicación adquiridas en el voluntariado.',
+    sectionSkills: 'Stack técnico',
+    sectionCerts: 'Formación y certificaciones',
+    expItems: [
+      {
+        role: 'Técnico en Infraestructura y Sistemas (Prácticas)',
+        org: 'Sector IT / Telecomunicaciones',
+        period: '2026',
+        desc: 'Administración básica de Active Directory, configuración de redes y soporte técnico directo a usuarios. Participación en el diseño, instalación y configuración de sistemas de videovigilancia (CCTV) e infraestructura de telecomunicaciones.',
+      },
+      {
+        role: 'Voluntario de Juventud · Facilitador de Talleres',
+        org: 'Cruz Roja',
+        period: '2026 – act.',
+        desc: 'Diseño y facilitación de talleres educativos para jóvenes. Creación de contenido interactivo (gamificación) centrado en ciberseguridad, uso responsable de la tecnología, participación juvenil y primeros auxilios.',
+      }
+    ],
+    save: 'Guardar contacto',
+    schedule: 'Contactar',
+    cv: 'Descargar CV',
+    statusReady: 'todos los sistemas operativos',
+  },
+  en: {
+    role: 'Telecommunications & IT Technician',
+    feedTitle: 'Systems status',
+    feedSub: 'Live monitoring',
+    hookLabel: '// the profile',
+    hook:
+      'Higher Technician in Telecommunications and IT Systems with Cisco CCNA certification. I combine a passion for hardware—from assembly to micro-soldering—with network and systems configuration. I love understanding how things work on the inside and sharing that knowledge.',
+    sectionProjects: 'Projects & Work',
+    sectionProjectsSub: 'Theory applied to practice',
+    sectionExp: 'Track record',
+    sectionGoal: 'Where I am heading',
+    goalText:
+      'My goal is to continue growing in the area of network infrastructure and cybersecurity. I am looking to apply my Cisco and systems knowledge in corporate environments, combining my technical profile with the communication skills acquired through volunteering.',
+    sectionSkills: 'Tech stack',
+    sectionCerts: 'Training & certifications',
+    expItems: [
+      {
+        role: 'IT & Infrastructure Technician (Internship)',
+        org: 'IT / Telecom Sector',
+        period: '2026',
+        desc: 'Basic Active Directory administration, network configuration and direct technical support to users. Participation in the design, installation and configuration of video surveillance systems (CCTV) and telecommunications infrastructure.',
+      },
+      {
+        role: 'Youth Volunteer · Workshop Facilitator',
+        org: 'Red Cross',
+        period: '2026 – present',
+        desc: 'Design and facilitation of educational workshops for young people. Creation of interactive content (gamification) focused on cybersecurity, responsible use of technology, youth participation and first aid.',
+      }
+    ],
+    save: 'Save contact',
+    schedule: 'Contact',
+    cv: 'Download CV',
+    statusReady: 'all systems operational',
+  },
+};
 
-            <h3 className="display text-xl font-bold text-ink mb-3 flex items-center gap-2">
-              <span className="text-info font-mono font-normal">$</span> {p.repo}
-            </h3>
-            
-            <p className="text-[14px] text-ink-dim leading-relaxed mb-5 flex-1">
-              {p[lang].desc}
-            </p>
-            
-            <div className="flex flex-wrap gap-2 mt-auto">
-              {p.stack.map((s) => (
-                <span key={s} className="mono text-[10px] text-ink-mute border border-line rounded px-2 py-1">
-                  {s}
-                </span>
-              ))}
-            </div>
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      {/* Paginación */}
-      <div className="border-t border-line px-4 py-3 bg-ink/5 flex justify-center gap-2">
-        {PROJECTS.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setCurrent(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${
-              i === current ? 'w-6 bg-info shadow-[0_0_8px_rgba(52,211,153,0.5)]' : 'w-2 bg-line hover:bg-ink-mute'
-            }`}
-            aria-label={`Ver proyecto ${i + 1}`}
-          />
-        ))}
-      </div>
-    </div>
-  );
-}
+export const STATE_LABEL = {
+  up: { es: 'OPERATIVO', en: 'OPERATIONAL', color: 'ok' },
+  guard: { es: 'PROTEGIENDO', en: 'GUARDING', color: 'info' },
+  watch: { es: 'MONITORIZANDO', en: 'WATCHING', color: 'watching' },
+};
