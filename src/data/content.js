@@ -8,9 +8,10 @@ export const CONTACT = {
   linkedin: 'https://www.linkedin.com/in/dihenrry-barbaran-16607139a/',
   cal: 'https://calendar.app.google/m3bmKbGKDfSJzoDu6',
   web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry',
-  // Cambiamos el nombre del archivo para que obligue al navegador a descargar el nuevo
-  cvES: '/CV-Dihenrry-ES.pdf', 
-  cvEN: '/CV-Dihenrry-ES.pdf', 
+  // ...
+  web: 'https://dnbcotrina.wixsite.com/porfolio-dihenrry',
+  cvES: '/CV-Dihenrry-2026.pdf',
+  cvEN: '/CV-Dihenrry-2026.pdf',
 };
 
 export const STATUS = [
